@@ -1,0 +1,15 @@
+export enum Emotion {
+  SELOS = 'selos',
+  BADING = 'bading',
+  INLOVE = 'inlove',
+  JOY = 'joy',
+  ENVIOUS = 'envious',
+  ANGER = 'angry',
+  DISGUST = 'disgust',
+  FEAR = 'fear',
+  SAD = 'sad',
+  EMBARRASSED = 'embarrassed',
+  ANXIOUS = 'anxious',
+  BORED = 'bored',
+  OTHER = 'other',
+}
