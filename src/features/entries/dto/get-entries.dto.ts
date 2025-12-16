@@ -1,8 +1,18 @@
 import { Type } from "class-transformer";
-import { IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
-import { PAGINATION } from "src/common/constants/pagination.constants";
+import { IsEnum, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
+import { PAGINATION } from "src/shared/constants/pagination.constants";
+import { EntryType } from "../enums/entry-type.enum";
+import { Emotion } from "../enums/emotion.enum";
 
 export class GetEntriesDTO {
+  @IsOptional()
+  @IsEnum(EntryType)
+  type?: EntryType;
+
+  @IsOptional()
+  @IsEnum(Emotion)
+  emotion?: Emotion;
+  
   @IsOptional()
   @IsString()
   cursor?: string;

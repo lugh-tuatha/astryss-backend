@@ -1,6 +1,6 @@
 export interface CursorPaginationMeta {
   limit: number;
-  total: number;
+  total?: number;
   nextCursor: string | null;
   hasMore: boolean;
 }
