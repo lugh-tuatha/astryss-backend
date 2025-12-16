@@ -32,18 +32,39 @@ const capitalize = (str?: string | null): string | null => {
     anger: "angry"
   };
 
-  const transformed = oldDocs.map((doc: any) => ({
-    _id: doc._id,
-    displayName: capitalize(doc.codename),
-    title: doc.title,
-    content: doc.summary ?? "",
-    avatarUrl: doc.cover && doc.cover.trim() !== "" ? doc.cover : "/avatar_default_0.webp",
-    type: "release",
-    variants: ["legacy"],
-    emotion: emotionMap[doc.category],
-    created_at: doc.createdAt,
-    updated_at: doc.updatedAt,
-  }));
+  const transformed = oldDocs.map((doc: any) => {
+    let avatar = `https://api.dicebear.com/9.x/pixel-art/svg?seed=${doc.codename}&size=80`;
+
+    if (doc.cover && doc.cover.trim() !== "") {
+      let cover = doc.cover.trim().replace(/^http:\/\//, "https://");
+
+      if (cover.includes("masked-emotion.vercel.app")) {
+        avatar = "/avatar_default_0.webp";
+      }
+
+      else if (cover.includes("emowall-backend.onrender.com")) {
+        const normalized = cover.replace(/\\/g, "/");
+        const fileName = normalized.substring(normalized.lastIndexOf("/") + 1);
+        avatar = `/assets/example-avatar/${fileName}`;
+      }
+      else {
+        avatar = cover;
+      }
+    }
+
+    return {
+      _id: doc._id,
+      displayName: capitalize(doc.codename),
+      title: doc.title,
+      content: doc.summary ?? "",
+      avatarUrl: avatar,
+      type: "release",
+      variants: ["legacy"],
+      emotion: emotionMap[doc.category],
+      created_at: doc.createdAt,
+      updated_at: doc.updatedAt,
+    };
+  });
 
   await V2Entry.insertMany(transformed);
 
