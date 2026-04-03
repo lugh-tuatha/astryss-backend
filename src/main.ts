@@ -15,6 +15,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000', 
+      'https://astryss.acethekawaii.work'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

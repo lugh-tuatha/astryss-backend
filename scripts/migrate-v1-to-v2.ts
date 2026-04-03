@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import { title } from 'process';
+
+// === Env validation ===
 dotenv.config();
+const { MONGO_URI_V1, MONGO_URI } = process.env;
+if (!MONGO_URI_V1 || !MONGO_URI) {
+  throw new Error('Missing MongoDB environment variables');
+}
 
 // === Utils ===
 const capitalize = (str?: string | null): string | null => {
@@ -15,8 +20,8 @@ const capitalize = (str?: string | null): string | null => {
 
 // === Main migration ===
 (async () => {
-  const v1 = await mongoose.createConnection(process.env.MONGO_URI_V1!).asPromise();
-  const v2 = await mongoose.createConnection(process.env.MONGO_URI!).asPromise();
+  const v1 = await mongoose.createConnection(MONGO_URI_V1).asPromise();
+  const v2 = await mongoose.createConnection(MONGO_URI!).asPromise();
 
   const V1Post = v1.model('V1Emotion', new mongoose.Schema({}, { strict: false }), 'emotions');
   const V2Entry = v2.model('Entry', new mongoose.Schema({}, { strict: false }), 'entries');

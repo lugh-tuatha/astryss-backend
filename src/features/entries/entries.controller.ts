@@ -17,7 +17,7 @@ export class EntriesController {
   @UseInterceptors(ResponseInterceptor)
   @Post()
   @UseInterceptors(FileInterceptor("image"))
-  async uploadAvatar(
+  async createEntry(
     @Body() createEntryDTO: CreateEntryDTO,
     @UploadedFile(
       new ParseFilePipeBuilder()
